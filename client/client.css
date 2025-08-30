@@ -1,3 +1,39 @@
+#create-event-modal form {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+#create-event-modal label {
+	display: flex;
+	align-items: center;
+	font-size: 1em;
+	color: #006d5b;
+	margin-bottom: 0;
+}
+
+#create-event-modal label > span {
+	display: inline-block;
+	min-width: 110px;
+	padding-right: 12px;
+	text-align: right;
+}
+
+/* Make all input fields the same width and add padding */
+#create-event-modal input[type="text"],
+#create-event-modal input[type="datetime-local"] {
+	width: 250px;
+	margin-left: 12px;
+	padding: 10px 14px;
+	border: 1px solid #009688;
+	border-radius: 4px;
+	font-size: 1em;
+	box-sizing: border-box;
+}
+
+#create-event-modal button[type="submit"] {
+	align-self: flex-start;
+}
 #events-table {
 	width: 100%;
 	border-collapse: collapse;
