@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Event Booking Client</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h1>Event Booking</h1>
+	<h2>Create Event</h2>
+	<form id="create-event-form">
+		<label>Name: <input type="text" name="name" required></label><br>
+		<label>Description: <input type="text" name="description" required></label><br>
+		<label>Location: <input type="text" name="location" required></label><br>
+		<label>Date & Time: <input type="datetime-local" name="datetime" required></label><br>
+		<button type="submit">Create Event</button>
+	</form>
+	<div id="create-event-result"></div>
+	<hr>
+	<h2>All Events</h2>
+	<button id="load-events">Load Events</button>
+	<ul id="events-list"></ul>
+	<script src="client.js"></script>
+</body>
+</html>

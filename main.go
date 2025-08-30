@@ -11,7 +11,7 @@ import (
 func main() {
 	db.InitDB()
 	server := gin.Default()
-
+	server.Static("/client", "./client")
 	server.GET("/events", getEvents)
 	server.POST("/events", createEvent)
 	server.Run(":8080") // localhost:8080
