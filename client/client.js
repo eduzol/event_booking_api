@@ -1,4 +1,40 @@
 $(function() {
+	// Filter events
+	$('#event-filter').on('input', function() {
+		const filter = $(this).val().toLowerCase();
+		const filtered = eventsData.filter(function(ev) {
+			return (
+				String(ev.id).includes(filter) ||
+				(ev.name && ev.name.toLowerCase().includes(filter)) ||
+				(ev.description && ev.description.toLowerCase().includes(filter)) ||
+				(ev.location && ev.location.toLowerCase().includes(filter)) ||
+				(ev.dateTime && ev.dateTime.toLowerCase().includes(filter))
+			);
+		});
+		renderEventsTable(filtered);
+	});
+	// Store events for sorting
+	let eventsData = [];
+	let sortOrder = { id: 'asc', date: 'asc' };
+
+	function renderEventsTable(events) {
+		const $tbody = $('#events-table tbody');
+		$tbody.empty();
+		if (Array.isArray(events) && events.length) {
+			events.forEach(function(ev) {
+				$tbody.append('<tr>' +
+					'<td>' + ev.id + '</td>' +
+					'<td>' + ev.name + '</td>' +
+					'<td>' + ev.description + '</td>' +
+					'<td>' + ev.location + '</td>' +
+					'<td>' + ev.dateTime + '</td>' +
+				'</tr>');
+			});
+		} else {
+			$tbody.append('<tr><td colspan="5">No events found.</td></tr>');
+		}
+	}
+
 	// Show create event modal
 	$('#show-create-event').on('click', function(e) {
 		e.preventDefault();
@@ -69,25 +105,33 @@ $(function() {
 		console.log('Loading events...');
 		$.get('/events', function(events) {
 			console.log('Events loaded:', events);
-			const $tbody = $('#events-table tbody');
-			$tbody.empty();
-			if (Array.isArray(events) && events.length) {
-				events.forEach(function(ev) {
-					$tbody.append('<tr>' +
-						'<td>' + ev.id + '</td>' +
-						'<td>' + ev.name + '</td>' +
-						'<td>' + ev.description + '</td>' +
-						'<td>' + ev.location + '</td>' +
-						'<td>' + ev.dateTime + '</td>' +
-					'</tr>');
-				});
-			} else {
-				$tbody.append('<tr><td colspan="5">No events found.</td></tr>');
-			}
+			eventsData = Array.isArray(events) ? events : [];
+			renderEventsTable(eventsData);
 		}).fail(function(xhr) {
 			console.log('Load events error:', xhr);
 			$('#events-table tbody').html('<tr><td colspan="5">Error loading events</td></tr>');
 		});
+	// Sort by ID
+	$('#sort-id').on('click', function() {
+		if (!eventsData.length) return;
+		sortOrder.id = sortOrder.id === 'asc' ? 'desc' : 'asc';
+		eventsData.sort(function(a, b) {
+			return sortOrder.id === 'asc' ? a.id - b.id : b.id - a.id;
+		});
+		renderEventsTable(eventsData);
+	});
+
+	// Sort by Date
+	$('#sort-date').on('click', function() {
+		if (!eventsData.length) return;
+		sortOrder.date = sortOrder.date === 'asc' ? 'desc' : 'asc';
+		eventsData.sort(function(a, b) {
+			const dateA = new Date(a.dateTime);
+			const dateB = new Date(b.dateTime);
+			return sortOrder.date === 'asc' ? dateA - dateB : dateB - dateA;
+		});
+		renderEventsTable(eventsData);
+	});
 	}
 
 	// Load events on button click
