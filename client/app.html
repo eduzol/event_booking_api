@@ -9,15 +9,22 @@
 </head>
 <body>
 	<h1>Event Booking</h1>
-	<h2>Create Event</h2>
-	<form id="create-event-form">
-		<label>Name: <input type="text" name="name" required></label><br>
-		<label>Description: <input type="text" name="description" required></label><br>
-		<label>Location: <input type="text" name="location" required></label><br>
-		<label>Date & Time: <input type="datetime-local" name="datetime" required></label><br>
-		<button type="submit">Create Event</button>
-	</form>
-	<div id="create-event-result"></div>
+	<a href="#" id="show-create-event" style="font-size:1.2em; color:#009688; text-decoration:underline; cursor:pointer;">Create Event</a>
+	<div id="main-create-event-result" style="margin:8px 0; color:#006d5b; font-weight:bold;"></div>
+	<div id="create-event-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:1000;">
+		<div style="background:#b2dfdb; padding:24px; border-radius:10px; max-width:400px; margin:80px auto; position:relative;">
+			<span id="close-create-event" style="position:absolute; top:8px; right:12px; font-size:1.5em; color:#006d5b; cursor:pointer;">&times;</span>
+			<h2>Create Event</h2>
+			<form id="create-event-form">
+				<label>Name: <input type="text" name="name" required></label><br>
+				<label>Description: <input type="text" name="description" required></label><br>
+				<label>Location: <input type="text" name="location" required></label><br>
+				<label>Date & Time: <input type="datetime-local" name="datetime" required></label><br>
+				<button type="submit">Create Event</button>
+			</form>
+			<div id="create-event-result"></div>
+		</div>
+	</div>
 	<hr>
 	<h2>All Events</h2>
 	<button id="load-events">Load Events</button>

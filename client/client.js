@@ -1,4 +1,25 @@
 $(function() {
+	// Show create event modal
+	$('#show-create-event').on('click', function(e) {
+		e.preventDefault();
+		$('#create-event-modal').fadeIn(200);
+	});
+
+	// Hide create event modal
+	$('#close-create-event').on('click', function() {
+		$('#create-event-modal').fadeOut(200);
+		$('#create-event-form')[0].reset();
+		$('#create-event-result').text("");
+	});
+
+	// Hide modal when clicking outside the form
+	$('#create-event-modal').on('click', function(e) {
+		if (e.target === this) {
+			$(this).fadeOut(200);
+			$('#create-event-form')[0].reset();
+			$('#create-event-result').text("");
+		}
+	});
 	// Create event
 	$('#create-event-form').on('submit', function(e) {
 		e.preventDefault();
@@ -27,7 +48,14 @@ $(function() {
 			data: JSON.stringify(data),
 			success: function(res) {
 				console.log('Create event response:', res);
-				$('#create-event-result').text(res.message + ' (ID: ' + res.event_id + ')');
+				// Show success message in main page
+				$('#main-create-event-result').text(res.message + ' (ID: ' + res.event_id + ')');
+				// Close modal and reset form/result
+				$('#create-event-modal').fadeOut(200);
+				$('#create-event-form')[0].reset();
+				$('#create-event-result').text("");
+				// Automatically reload events table
+				loadEvents();
 			},
 			error: function(xhr) {
 				console.log('Create event error:', xhr);
@@ -36,8 +64,8 @@ $(function() {
 		});
 	});
 
-	// Load events
-	$('#load-events').on('click', function() {
+	// Load events function
+	function loadEvents() {
 		console.log('Loading events...');
 		$.get('/events', function(events) {
 			console.log('Events loaded:', events);
@@ -60,5 +88,8 @@ $(function() {
 			console.log('Load events error:', xhr);
 			$('#events-table tbody').html('<tr><td colspan="5">Error loading events</td></tr>');
 		});
-	});
+	}
+
+	// Load events on button click
+	$('#load-events').on('click', loadEvents);
 });
