@@ -2,7 +2,10 @@ module github.com/eduzol/event_booking_api
 
 go 1.25.0
 
-require github.com/gin-gonic/gin v1.10.1
+require (
+	github.com/gin-gonic/gin v1.10.1
+	github.com/mattn/go-sqlite3 v1.14.32
+)
 
 require (
 	github.com/bytedance/sonic v1.14.0 // indirect

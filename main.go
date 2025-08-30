@@ -3,11 +3,13 @@ package main
 import (
 	"net/http"
 
+	"github.com/eduzol/event_booking_api/db"
 	"github.com/eduzol/event_booking_api/models"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	db.InitDB()
 	server := gin.Default()
 
 	server.GET("/events", getEvents)
