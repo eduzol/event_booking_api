@@ -41,18 +41,24 @@ $(function() {
 		console.log('Loading events...');
 		$.get('/events', function(events) {
 			console.log('Events loaded:', events);
-			const $list = $('#events-list');
-			$list.empty();
+			const $tbody = $('#events-table tbody');
+			$tbody.empty();
 			if (Array.isArray(events) && events.length) {
 				events.forEach(function(ev) {
-					$list.append('<li><strong>' + ev.name + '</strong> - ' + ev.description + ' @ ' + ev.location + ' (' + ev.dateTime + ')</li>');
+					$tbody.append('<tr>' +
+						'<td>' + ev.id + '</td>' +
+						'<td>' + ev.name + '</td>' +
+						'<td>' + ev.description + '</td>' +
+						'<td>' + ev.location + '</td>' +
+						'<td>' + ev.dateTime + '</td>' +
+					'</tr>');
 				});
 			} else {
-				$list.append('<li>No events found.</li>');
+				$tbody.append('<tr><td colspan="5">No events found.</td></tr>');
 			}
 		}).fail(function(xhr) {
 			console.log('Load events error:', xhr);
-			$('#events-list').html('<li>Error loading events</li>');
+			$('#events-table tbody').html('<tr><td colspan="5">Error loading events</td></tr>');
 		});
 	});
 });
